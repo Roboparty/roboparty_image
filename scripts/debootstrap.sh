@@ -351,6 +351,7 @@ create_rootfs_cache()
 		fi
 
 		install_docker
+		install_ros2
 		[[ ${BOARDFAMILY} == "starfive2" ]] && jh7110_install_libs
 		[[ ${BOARDFAMILY} == "cix" ]] && install_cix_debs
 

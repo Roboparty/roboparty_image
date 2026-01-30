@@ -2054,3 +2054,52 @@ install_docker() {
 #		scp ${destimg}/*.img ${PC_NAME}@${PC_IP}:${PC_DIR}
 #	fi
 #}
+install_ros2() {
+
+    display_alert "Installing" "ROS 2 (Local Deb Method)" "info"
+    
+    chroot "${SDCARD}" /bin/bash -c "apt-get update"
+    chroot "${SDCARD}" /bin/bash -c "apt-get install -y -qq gnupg2 lsb-release ca-certificates >/dev/null 2>&1"
+
+    local local_deb="$EXTER/cache/debs/ros2/ros2-apt-source_1.1.0.jammy_all.deb"
+    
+	if [ -f "$local_deb" ]; then
+		echo "Local ROS2 configuration package found, copying..."
+		cp "$local_deb" "${SDCARD}/tmp/ros2-apt-source.deb"
+	else
+		echo "Error: ros2-apt-source_1.1.0.jammy_all.deb not found in the $EXTER/cache/debs/ros2/ directory"
+		exit 1
+	fi
+
+    display_alert "Installing" "ROS 2 Repo Source" "info"
+    chroot "${SDCARD}" /bin/bash -c "dpkg -i /tmp/ros2-apt-source.deb"
+
+    chroot "${SDCARD}" /bin/bash -c "apt-get update"
+    chroot "${SDCARD}" /bin/bash -c "apt-get update"
+
+    display_alert "Installing" "ROS 2 Packages" "info"
+
+    chroot "${SDCARD}" /bin/bash -c "apt-get install -y ros-humble-desktop ros-dev-tools python3-colcon-common-extensions"
+    chroot "${SDCARD}" /bin/bash -c "apt-get update --fix-missing"
+    
+	chroot "${SDCARD}" /bin/bash -c "apt-get install -y ros-humble-desktop ros-dev-tools python3-colcon-common-extensions"
+    chroot "${SDCARD}" /bin/bash -c "apt-get update --fix-missing"
+    chroot "${SDCARD}" /bin/bash -c "apt-get install -y ros-humble-desktop ros-dev-tools python3-colcon-common-extensions"
+    chroot "${SDCARD}" /bin/bash -c "apt-get update --fix-missing"
+    chroot "${SDCARD}" /bin/bash -c "apt-get install -y ros-humble-desktop ros-dev-tools python3-colcon-common-extensions"
+	
+	chroot "${SDCARD}" /bin/bash -c "apt-get remove brltty -y"
+
+    rm "${SDCARD}/tmp/ros2-apt-source.deb"
+
+    local setup_line="source /opt/ros/humble/setup.bash"
+    if ! grep -q "${setup_line}" "${SDCARD}/root/.bashrc"; then
+        echo "${setup_line}" >> "${SDCARD}/root/.bashrc"
+    fi
+    if [ -d "${SDCARD}/home/orangepi" ]; then
+        if ! grep -q "${setup_line}" "${SDCARD}/home/orangepi/.bashrc"; then
+            echo "${setup_line}" >> "${SDCARD}/home/orangepi/.bashrc"
+            chroot "${SDCARD}" chown orangepi:orangepi /home/orangepi/.bashrc
+        fi
+    fi
+}
