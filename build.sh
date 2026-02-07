@@ -207,6 +207,12 @@ EXTER="${SRC}/external"
 # Create userpatches directory if not exists
 mkdir -p "${SRC}"/userpatches
 
+# Copy kernel patches to userpatches
+if [ -d "${EXTER}/patch/kernel" ] && [ ! -d "${SRC}/userpatches/kernel" ]; then
+	display_alert "Copying kernel patches to userpatches" "kernel" "info"
+	cp -r "${EXTER}/patch/kernel" "${SRC}/userpatches/"
+fi
+
 
 # Create example configs if none found in userpatches
 if ! ls "${SRC}"/userpatches/{config-example.conf,config-docker.conf,config-vagrant.conf} 1> /dev/null 2>&1; then

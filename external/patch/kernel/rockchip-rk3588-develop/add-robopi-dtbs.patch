@@ -1,0 +1,11 @@
+diff --git a/arch/arm64/boot/dts/rockchip/Makefile b/arch/arm64/boot/dts/rockchip/Makefile
+index 57c0448d017a..e5a283851c02 100644
+--- a/arch/arm64/boot/dts/rockchip/Makefile
++++ b/arch/arm64/boot/dts/rockchip/Makefile
+@@ -407,5 +407,8 @@
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rv1126b-iotest-v10.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rv1126bp-evb-v14.dtb
++dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588-orangepi-5-plus-robopi1.dtb
++dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-orangepi-cm5-robopi2.dtb
++dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588-robopi3.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rv1126bp-evb-v14-dual-cam.dtb
