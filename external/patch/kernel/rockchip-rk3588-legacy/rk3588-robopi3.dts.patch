@@ -10,7 +10,7 @@
 + */
 +
 +/dts-v1/;
-+
++#include <dt-bindings/display/drm_mipi_dsi.h>
 +#include "rk3588-evb7-lp4.dtsi"
 +#include "rk3588-linux.dtsi"
 +

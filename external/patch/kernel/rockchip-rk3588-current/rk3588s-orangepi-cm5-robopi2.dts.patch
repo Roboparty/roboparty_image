@@ -1,6 +1,6 @@
 --- /dev/null
 +++ b/arch/arm64/boot/dts/rockchip/rk3588s-orangepi-cm5-robopi2.dts
-@@ -0,0 +1,1042 @@
+@@ -0,0 +1,1037 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2021 Rockchip Electronics Co., Ltd.
@@ -21,11 +21,6 @@
 +#include "rk3588s.dtsi"
 +#include "rk3588-rk806-single.dtsi"
 +#include "rk3588-linux.dtsi"
-+
-+#include "rk3588s-orangepi-cm5-tablet-lcd.dtsi"
-+#include "rk3588s-orangepi-cm5-tablet-camera1.dtsi"
-+#include "rk3588s-orangepi-cm5-tablet-camera2.dtsi"
-+#include "rk3588s-orangepi-cm5-tablet-camera3.dtsi"
 +
 +/ {
 +	model = "RK3588S Orange Pi CM5 Tablet";
