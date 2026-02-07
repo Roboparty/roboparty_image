@@ -2380,7 +2380,6 @@ index c2778300e151..d40df04752ff 100644
  #ifdef CONFIG_NO_GKI
 	serial_port_out(port, UART_RS485_TCR, up->tcr);
  #endif
- #endif
 -	spin_unlock_irqrestore(&port->lock, flags);
 +	uart_port_unlock_irqrestore(port, flags);
  	serial8250_rpm_put(up);
