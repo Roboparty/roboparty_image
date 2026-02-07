@@ -163,7 +163,9 @@ fi
 
 
 if [[ -z $BOARD ]]; then
-
+	options+=("robopi1"                    "Rockchip  RK3588 octa core 4-32GB RAM 2.5GBE USB3 USB-C WiFi/BT NVMe eMMC")
+	options+=("robopi2"                    "Rockchip  RK3588S octa core 4-16GB RAM USB3 USB-C WiFi/BT")
+	options+=("robopi3"                    "Rockchip  RK3588 octa core 4-16GB RAM 2.5GBE USB3 WiFi/BT NVMe eMMC")
 	#options+=("orangepir1"			"Allwinner H2+ quad core 256MB RAM WiFi SPI 2xETH")
 	#options+=("orangepizero"		"Allwinner H2+ quad core 256MB/512MB RAM WiFi SPI")
 	#options+=("orangepipc"			"Allwinner H3 quad core 1GB RAM")
@@ -289,6 +291,7 @@ if [[ -z $BRANCH ]]; then
 	[[ $KERNEL_TARGET == *current* ]] && options+=("current" "Recommended. Come with best support")
 	[[ $KERNEL_TARGET == *legacy* ]] && options+=("legacy" "Old stable / Legacy")
 	[[ $KERNEL_TARGET == *next* ]] && options+=("next" "Use the latest kernel")
+	[[ $KERNEL_TARGET == *develop* ]] && options+=("develop" "Development kernel (6.6)")
 
 	menustr="Select the target kernel branch\nExact kernel versions depend on selected board"
 	# do not display selection dialog if only one kernel branch is available

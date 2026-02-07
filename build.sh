@@ -247,6 +247,20 @@ if ! ls "${SRC}"/userpatches/{config-example.conf,config-docker.conf,config-vagr
 		cp "${EXTER}"/config/templates/Vagrantfile "${SRC}"/userpatches/Vagrantfile || exit 1
 	fi
 
+	# Create robopi1 config
+	if [[ ! -f "${SRC}"/userpatches/config-robopi1.conf ]]; then
+	        cp "${EXTER}"/config/templates/config-robopi1.conf "${SRC}"/userpatches/config-robopi1.conf || exit 1
+	fi
+
+	# Create robopi2 config
+	if [[ ! -f "${SRC}"/userpatches/config-robopi2.conf ]]; then
+	        cp "${EXTER}"/config/templates/config-robopi2.conf "${SRC}"/userpatches/config-robopi2.conf || exit 1
+	fi
+
+	# Create robopi3 config
+	if [[ ! -f "${SRC}"/userpatches/config-robopi3.conf ]]; then
+	        cp "${EXTER}"/config/templates/config-robopi3.conf "${SRC}"/userpatches/config-robopi3.conf || exit 1
+	fi
 fi
 
 if [[ -z "${CONFIG}" && -n "$1" && -f "${SRC}/userpatches/config-$1.conf" ]]; then
