@@ -827,8 +827,40 @@ compile_orangepi-config()
 	rm -rf "${tmpdir}"
 }
 
-
-
+compile_ethercat_igh()
+{
+    local work_dir
+    work_dir="${EXTER}/cache/sources/igh-deb"
+    
+    display_alert "Building" "ethercat-igh DEB package" "info"
+    
+    # Fetch igh-deb source if needed
+    [[ $IGNORE_UPDATES != yes ]] && fetch_from_repo "https://github.com/wentywenty/igh-deb.git" "$work_dir" "branch:master"
+    
+    # Check if source exists
+    if [[ ! -d "$work_dir" ]]; then
+        exit_with_error "igh-deb source not found" "$work_dir"
+    fi
+    
+    # Find toolchain path for cross-compilation
+    local toolchain
+    if [[ $(dpkg --print-architecture) == amd64 ]]; then
+        toolchain=$(find_toolchain "$KERNEL_COMPILER" "$KERNEL_USE_GCC")
+        [[ -z $toolchain ]] && exit_with_error "Could not find required toolchain" "${KERNEL_COMPILER}gcc $KERNEL_USE_GCC"
+        display_alert "Compiler version" "${KERNEL_COMPILER}gcc $(eval env PATH="${toolchain}:${PATH}" "${KERNEL_COMPILER}gcc" -dumpversion)" "info"
+    fi
+    
+    # Run build script with kernel compiler settings and proper PATH
+    env PATH="${toolchain}:${PATH}" bash "$work_dir/build.sh" "$KERNEL_COMPILER" "${LINUXSOURCEDIR}" || \
+        exit_with_error "ethercat-igh build failed"
+    
+    # Copy generated deb to DEB storage
+    display_alert "Copying" "ethercat-igh to DEB storage" "info"
+    [[ -d "${DEB_STORAGE}" ]] || mkdir -p "${DEB_STORAGE}"
+    cp "$work_dir"/output/ethercat-igh_*.deb "${DEB_STORAGE}/" || true
+    
+    display_alert "ethercat-igh package built successfully" "" "info"
+}
 
 compile_sunxi_tools()
 {

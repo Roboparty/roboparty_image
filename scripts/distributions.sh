@@ -395,6 +395,17 @@ POST_INSTALL_KERNEL_DEBS
 		fi
 	fi
 
+	# install ethercat-igh
+	if [[ "${PACKAGE_LIST_RM}" != *ethercat-igh* ]]; then
+		if [[ "${REPOSITORY_INSTALL}" != *ethercat-igh* ]]; then
+			local ethercat_deb
+			ethercat_deb=$(find "${DEB_STORAGE}" -name "ethercat-igh_*.deb" | head -1)
+			if [[ -f "$ethercat_deb" ]]; then
+				install_deb_chroot "$ethercat_deb"
+			fi
+		fi
+	fi
+
 	# install plymouth-theme-orangepi
 	if [[ $PLYMOUTH == yes && $BUILD_DESKTOP == yes && $RELEASE != buster ]]; then
 		if [[ "${REPOSITORY_INSTALL}" != *plymouth-theme-orangepi* ]]; then
