@@ -14,6 +14,23 @@ Soc | Boards |
 | Starfive  JH7110 | Orange Pi RV |
 | Ky X1 | Orange Pi RV2/R2S |
 
+## Quick Start
+
+```bash
+cd orangepi-build
+./build.sh
+```
+
+Select board during build:
+
+| Firmware | Board Selection |
+|:--|:--|
+| 01 | `robopi1` |
+| 02 | `robopi2` |
+| 03 | `robopi3` |
+
+**Recommended Kernel Version**: `current`
+
 ## Download links
 
 - 中文链接：     http://www.orangepi.cn
