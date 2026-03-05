@@ -406,6 +406,17 @@ POST_INSTALL_KERNEL_DEBS
 		fi
 	fi
 
+	# install bms-daemon
+	if [[ "${PACKAGE_LIST_RM}" != *bms-daemon* ]]; then
+		if [[ "${REPOSITORY_INSTALL}" != *bms-daemon* ]]; then
+			local bms_deb
+			bms_deb=$(find "${DEB_STORAGE}" -name "bms-daemon_*.deb" | head -1)
+			if [[ -f "$bms_deb" ]]; then
+				install_deb_chroot "$bms_deb"
+			fi
+		fi
+	fi
+
 	# install plymouth-theme-orangepi
 	if [[ $PLYMOUTH == yes && $BUILD_DESKTOP == yes && $RELEASE != buster ]]; then
 		if [[ "${REPOSITORY_INSTALL}" != *plymouth-theme-orangepi* ]]; then

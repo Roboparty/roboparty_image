@@ -862,6 +862,44 @@ compile_ethercat_igh()
     display_alert "ethercat-igh package built successfully" "" "info"
 }
 
+compile_bms_daemon()
+{
+    local work_dir
+    work_dir="${EXTER}/cache/sources/bms_daemon"
+
+    display_alert "Building" "bms-daemon DEB package" "info"
+
+    # Fetch bms_daemon source if needed
+    [[ $IGNORE_UPDATES != yes ]] && fetch_from_repo "https://github.com/wentywenty/bms_daemon.git" "$work_dir" "branch:main"
+
+    # Check if source exists
+    if [[ ! -d "$work_dir" ]]; then
+        exit_with_error "bms_daemon source not found" "$work_dir"
+    fi
+
+    # Setup cross-compilation prefix if building on amd64
+    local cross_prefix=""
+    local toolchain=""
+    if [[ $(dpkg --print-architecture) == amd64 ]]; then
+        toolchain=$(find_toolchain "$KERNEL_COMPILER" "$KERNEL_USE_GCC")
+        [[ -z $toolchain ]] && exit_with_error "Could not find required toolchain" "${KERNEL_COMPILER}gcc $KERNEL_USE_GCC"
+        cross_prefix="${KERNEL_COMPILER}"
+        display_alert "Compiler version" "${KERNEL_COMPILER}gcc $(eval env PATH="${toolchain}:${PATH}" "${KERNEL_COMPILER}gcc" -dumpversion)" "info"
+    fi
+
+    # Run build_deb.sh with cross-compilation settings
+    cd "$work_dir"
+    env PATH="${toolchain}:${PATH}" CROSS_PREFIX="${cross_prefix}" ARCH="arm64" \
+        bash "$work_dir/build_deb.sh" || exit_with_error "bms-daemon build failed"
+
+    # Copy generated deb to DEB storage
+    display_alert "Copying" "bms-daemon to DEB storage" "info"
+    [[ -d "${DEB_STORAGE}" ]] || mkdir -p "${DEB_STORAGE}"
+    cp "$work_dir"/bms-daemon_*.deb "${DEB_STORAGE}/" || true
+
+    display_alert "bms-daemon package built successfully" "" "info"
+}
+
 compile_sunxi_tools()
 {
 	# Compile and install only if git commit hash changed

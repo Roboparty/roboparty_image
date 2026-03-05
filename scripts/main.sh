@@ -625,6 +625,11 @@ if [[ $BUILD_OPT == rootfs || $BUILD_OPT == image ]]; then
 		[[ "${REPOSITORY_INSTALL}" != *ethercat-igh* ]] && compile_ethercat_igh
 	fi
 
+	# Compile bms-daemon if packed .deb does not exist or use the one from repository
+	if [[ -z "$(find ${DEB_STORAGE} -name "bms-daemon_*.deb" 2>/dev/null)" ]]; then
+		[[ "${REPOSITORY_INSTALL}" != *bms-daemon* ]] && compile_bms_daemon
+	fi
+
 	# Compile plymouth-theme-orangepi if packed .deb does not exist or use the one from repository
 	if [[ ! -f ${DEB_STORAGE}/plymouth-theme-orangepi_${REVISION}_all.deb && $PLYMOUTH == yes ]]; then
 

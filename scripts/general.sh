@@ -2079,14 +2079,14 @@ install_ros2() {
 
     display_alert "Installing" "ROS 2 Packages" "info"
 
-    chroot "${SDCARD}" /bin/bash -c "apt-get install -y ros-humble-desktop ros-dev-tools python3-colcon-common-extensions"
+    chroot "${SDCARD}" /bin/bash -c "apt-get install -y ros-humble-desktop ros-dev-tools python3-colcon-common-extensions ccache libfmt-dev libspdlog-dev libeigen3-dev"
     chroot "${SDCARD}" /bin/bash -c "apt-get update --fix-missing"
     
-	chroot "${SDCARD}" /bin/bash -c "apt-get install -y ros-humble-desktop ros-dev-tools python3-colcon-common-extensions"
+	chroot "${SDCARD}" /bin/bash -c "apt-get install -y ros-humble-desktop ros-dev-tools python3-colcon-common-extensions ccache libfmt-dev libspdlog-dev libeigen3-dev"
     chroot "${SDCARD}" /bin/bash -c "apt-get update --fix-missing"
-    chroot "${SDCARD}" /bin/bash -c "apt-get install -y ros-humble-desktop ros-dev-tools python3-colcon-common-extensions"
+    chroot "${SDCARD}" /bin/bash -c "apt-get install -y ros-humble-desktop ros-dev-tools python3-colcon-common-extensions ccache libfmt-dev libspdlog-dev libeigen3-dev"
     chroot "${SDCARD}" /bin/bash -c "apt-get update --fix-missing"
-    chroot "${SDCARD}" /bin/bash -c "apt-get install -y ros-humble-desktop ros-dev-tools python3-colcon-common-extensions"
+    chroot "${SDCARD}" /bin/bash -c "apt-get install -y ros-humble-desktop ros-dev-tools python3-colcon-common-extensions ccache libfmt-dev libspdlog-dev libeigen3-dev"
 	
 	chroot "${SDCARD}" /bin/bash -c "apt-get remove brltty -y"
 
