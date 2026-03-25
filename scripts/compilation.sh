@@ -602,9 +602,9 @@ compile_firmware()
 	mkdir -p "${firmwaretempdir}/${plugin_dir}/lib/firmware"
 
 	if [[ $GITEE_SERVER == yes ]]; then
-		[[ $IGNORE_UPDATES != yes ]] && fetch_from_repo "https://gitee.com/orangepi-xunlong/firmware" "${EXTER}/cache/sources/orangepi-firmware-git" "branch:master"
+		[[ $IGNORE_UPDATES != yes ]] && fetch_from_repo "https://gitee.com/wentywenty/firmware" "${EXTER}/cache/sources/orangepi-firmware-git" "branch:master"
 	else
-		[[ $IGNORE_UPDATES != yes ]] && fetch_from_repo "https://github.com/orangepi-xunlong/firmware" "${EXTER}/cache/sources/orangepi-firmware-git" "branch:master"
+		[[ $IGNORE_UPDATES != yes ]] && fetch_from_repo "https://github.com/wentywenty/firmware" "${EXTER}/cache/sources/orangepi-firmware-git" "branch:master"
 	fi
 
 	if [[ -n $FULL ]]; then
