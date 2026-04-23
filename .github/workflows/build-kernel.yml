@@ -120,7 +120,7 @@ jobs:
           bash "$GITHUB_WORKSPACE/external/cache/sources/igh-deb/build.sh" \
             "aarch64-linux-gnu-" \
             "$GITHUB_WORKSPACE/kernel/orange-pi-6.1-rk35xx"
-          cp "$GITHUB_WORKSPACE/external/cache/sources/igh-deb/output/ethercat-igh_"*.deb \
+          sudo cp "$GITHUB_WORKSPACE/external/cache/sources/igh-deb/output/ethercat-igh_"*.deb \
              "$GITHUB_WORKSPACE/output/debs/"
 
       # ── 9. 收集所有产物 ───────────────────────────────────────
