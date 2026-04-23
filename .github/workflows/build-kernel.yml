@@ -102,7 +102,7 @@ jobs:
       # ── 6. 编译内核、头文件、设备树 DEB ─────────────────────
       - name: Build kernel DEBs
         run: |
-          sudo bash ./build.sh \
+          sudo bash "$GITHUB_WORKSPACE/build.sh" \
             BOARD=${{ matrix.board }} \
             BRANCH=current \
             BUILD_OPT=kernel \
@@ -126,12 +126,13 @@ jobs:
       # ── 8. 编译 IgH EtherCAT DEB ─────────────────────────────
       - name: Build IgH EtherCAT DEB
         run: |
-          TOOLCHAIN_BIN="$(find toolchains -name 'aarch64-none-linux-gnu-gcc' -type f | head -1 | xargs dirname)"
+          TOOLCHAIN_BIN="$(find "$GITHUB_WORKSPACE/toolchains" -name 'aarch64-none-linux-gnu-gcc' -type f | head -1 | xargs dirname)"
           PATH="${TOOLCHAIN_BIN}:${PATH}" \
-            bash external/cache/sources/igh-deb/build.sh \
+            bash "$GITHUB_WORKSPACE/external/cache/sources/igh-deb/build.sh" \
               "aarch64-none-linux-gnu-" \
-              "$(pwd)/kernel/orange-pi-6.1-rk35xx"
-          cp external/cache/sources/igh-deb/output/ethercat-igh_*.deb output/debs/
+              "$GITHUB_WORKSPACE/kernel/orange-pi-6.1-rk35xx"
+          cp "$GITHUB_WORKSPACE/external/cache/sources/igh-deb/output/ethercat-igh_*.deb" \
+             "$GITHUB_WORKSPACE/output/debs/"
 
       # ── 9. 收集所有产物 ───────────────────────────────────────
       - name: Collect DEBs
