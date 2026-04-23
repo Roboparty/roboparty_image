@@ -2130,11 +2130,11 @@ install_ros2() {
         curl -fsSL http://apt.roboparty.com:60012/roboparty.gpg | gpg --dearmor --yes -o "${SDCARD}/usr/share/keyrings/roboparty-archive-keyring.gpg"
 
         # 2. 写入 common 公共源 (覆盖写入 >)
-        echo "deb [arch=arm64 signed-by=/usr/share/keyrings/roboparty-archive-keyring.gpg] http://apt.roboparty.com:60012/ common main" \
+        echo "deb [arch=arm64 signed-by=/usr/share/keyrings/roboparty-archive-keyring.gpg] http://apt.roboparty.com:/ common main" \
             > "${SDCARD}/etc/apt/sources.list.d/roboparty.list"
 
         # 3. 写入特定板卡的源 (追加写入 >>)
-        echo "deb [arch=arm64 signed-by=/usr/share/keyrings/roboparty-archive-keyring.gpg] http://apt.roboparty.com:60012/ ${roboparty_dist} main" \
+        echo "deb [arch=arm64 signed-by=/usr/share/keyrings/roboparty-archive-keyring.gpg] http://apt.roboparty.com/ ${roboparty_dist} main" \
             >> "${SDCARD}/etc/apt/sources.list.d/roboparty.list"
 
         chroot "${SDCARD}" /bin/bash -c "apt-get update"
