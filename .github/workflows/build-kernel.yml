@@ -106,10 +106,10 @@ jobs:
             GITEE_SERVER=no \
             IGNORE_UPDATES=${{ steps.cache-kernel.outputs.cache-hit == 'true' && 'yes' || 'no' }}
 
-      # ── 7. 克隆 igh-deb 源码 ──────────────────────────────────
+      # ── 6. 克隆 igh-deb 源码（含 ethercat submodule）────────
       - name: Clone igh-deb
         run: |
-          git clone --depth=1 \
+          git clone --depth=1 --recurse-submodules --shallow-submodules \
             https://github.com/wentywenty/igh-deb.git \
             external/cache/sources/igh-deb
 
