@@ -102,7 +102,7 @@ jobs:
       # ── 6. 编译内核、头文件、设备树 DEB ─────────────────────
       - name: Build kernel DEBs
         run: |
-          sudo ./build.sh \
+          sudo bash ./build.sh \
             BOARD=${{ matrix.board }} \
             BRANCH=current \
             BUILD_OPT=kernel \
