@@ -137,10 +137,10 @@ jobs:
           path: output/debs/
           if-no-files-found: error
           retention-days: 30
+          
+      - name: Ensure zstd installed
+        run: sudo apt-get update && sudo apt-get install -y zstd
 
-  # ───────────────────────────────────────────────────────────
-  # 发布 Release（仅在推送 tag 时触发）
-  # ───────────────────────────────────────────────────────────
   release:
     name: Create GitHub Release
     runs-on: ubuntu-22.04-arm
