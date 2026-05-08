@@ -860,7 +860,7 @@ compile_ethercat_igh()
     cd "$work_dir"
     env PATH="${toolchain}:${PATH}" \
         CROSS_COMPILE="${toolchain}/${KERNEL_COMPILER}" \
-        KERNEL_SRC="${kerneldir}" \
+        KERNEL_SRC="${LINUXSOURCEDIR}" \
         ARCH="arm64" \
         dpkg-buildpackage -us -uc -a arm64 -b || exit_with_error "ethercat-igh build failed"
     cd - >/dev/null

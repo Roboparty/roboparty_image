@@ -131,7 +131,7 @@ jobs:
           export ARCH="arm64"
           
           # 通过标准 debian 流程打包 (根据 igh-deb/debian/rules)
-          dpkg-buildpackage -us -uc -a arm64 -b
+          dpkg-buildpackage -d -us -uc -a arm64 -b
           
           # 收集生成的 deb 到 OrangePi 标准输出文件夹里
           sudo cp ../ethercat-igh_*.deb "$GITHUB_WORKSPACE/output/debs/"
