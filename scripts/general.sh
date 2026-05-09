@@ -2103,6 +2103,9 @@ install_ros2() {
         fi
     fi
 
+}
+
+install_roboparty() {
 	if [[ $BUILD_ROBOPARTY_PACKAGES == yes ]]; then
         display_alert "Installing" "RoboParty Packages" "info"
         # 根据板卡选择 apt 发行版名称和要安装的包

@@ -72,7 +72,7 @@ jobs:
             pv python3 python3-dev python3-setuptools \
             qemu-user-static rsync swig u-boot-tools unzip \
             uuid uuid-dev uuid-runtime wget whiptail xxd zip zlib1g-dev \
-            autoconf automake libtool
+            autoconf automake libtool debhelper
           sudo locale-gen en_US.UTF-8
 
       # 修改2：增加对 toolchains 文件夹的缓存机制，极大加速构建！
