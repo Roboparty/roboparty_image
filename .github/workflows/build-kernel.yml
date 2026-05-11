@@ -112,13 +112,8 @@ jobs:
           sudo bash "$GITHUB_WORKSPACE/build.sh" \
             BOARD=${{ matrix.board }} \
             BRANCH=current \
-            BUILD_OPT=u-boot \
-            CLEAN_LEVEL="debs" \
-            USE_TORRENT=no \
-            DOWNLOAD_MIRROR="" \
-            NO_APT_CACHER=yes \
-            GITEE_SERVER=no \
-            IGNORE_UPDATES=no
+            BUILD_OPT=u-boot
+            
       # ── 5. 保存工具链到服务器本地硬盘 ────────────────────────
       - name: Save Toolchain to Local Disk
         if: steps.local-cache.outputs.hit == 'false'
