@@ -49,11 +49,21 @@ jobs:
         with:
           clean: true
 
-      # ── 2. 安装构建依赖 ──────────────────────────────────────
+      # ── 2. 安装构建依赖 (加入多并发防冲突机制) ─────────────────────────
       - name: Install build dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
+          echo "==== 检查 apt 锁状态，防止多个 Runner 冲突 ===="
+          
+          # 第一重保险：如果发现别人在用，就每隔 10 秒看一眼，直到别人用完
+          while sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1 || sudo fuser /var/lib/apt/lists/lock >/dev/null 2>&1; do
+            echo "发现其他 Runner 正在安装依赖，排队等待 10 秒..."
+            sleep 10
+          done
+          
+          # 第二重保险：利用 apt 内置的超时参数 (最多等 600 秒)
+          sudo apt-get update -o DPkg::Lock::Timeout=600
+          
+          sudo apt-get install -o DPkg::Lock::Timeout=600 -y --no-install-recommends \
             acl aria2 bc binfmt-support binutils bison btrfs-progs \
             build-essential ca-certificates ccache cpio cryptsetup-bin \
             debian-archive-keyring debootstrap device-tree-compiler \
@@ -68,6 +78,7 @@ jobs:
             qemu-user-static rsync swig u-boot-tools unzip \
             uuid uuid-dev uuid-runtime wget whiptail xxd zip zlib1g-dev \
             autoconf automake libtool debhelper zstd
+            
           sudo locale-gen en_US.UTF-8
 
       # ── 3. EPYC 本地工具链缓存 (秒级解压) ─────────────────────
