@@ -106,16 +106,19 @@ jobs:
             BOARD=${{ matrix.board }} \
             BRANCH=current \
             BUILD_OPT=kernel \
-            KERNEL_CONFIGURE=no \
-            INSTALL_HEADERS=yes \
-            CLEAN_LEVEL="debs" \
-            USE_TORRENT=no \
-            DOWNLOAD_MIRROR="" \
-            build_rt_image=no \
-            NO_APT_CACHER=yes \
-            GITEE_SERVER=no \
-            IGNORE_UPDATES=no
+            KERNEL_CONFIGURE=no
             
+      - name: Collect Kernel DEBs
+        run: |
+          sudo mkdir -p output/release-debs
+          find output/debs -type f -name "*.deb" | while read -r pkg; do
+            if [[ "$pkg" == *"linux-image"* ]] || \
+               [[ "$pkg" == *"linux-dtb"* ]] || \
+               [[ "$pkg" == *"linux-headers"* ]]; then
+               sudo cp "$pkg" output/release-debs/
+            fi
+          done
+
       # ── 4.5 编译 U-Boot DEB ─────────────────────────────────
       - name: Build U-Boot DEBs
         run: |
@@ -163,14 +166,11 @@ jobs:
           sudo cp ../ethercat-igh_*.deb "$GITHUB_WORKSPACE/output/debs/"
 
       # ── 7. 收集并上传产物 ────────────────────────────────────
-      - name: Collect & Upload DEBs
+      - name: Collect U-Boot & EtherCAT DEBs
         run: |
           sudo mkdir -p output/release-debs
           find output/debs -type f -name "*.deb" | while read -r pkg; do
-            if [[ "$pkg" == *"linux-image"* ]] || \
-               [[ "$pkg" == *"linux-dtb"* ]] || \
-               [[ "$pkg" == *"linux-headers"* ]] || \
-               [[ "$pkg" == *"u-boot"* ]] || \
+            if [[ "$pkg" == *"u-boot"* ]] || \
                [[ "$pkg" == *"ethercat-igh"* ]]; then
                sudo cp "$pkg" output/release-debs/
             fi
