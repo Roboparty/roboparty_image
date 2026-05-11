@@ -143,7 +143,7 @@ jobs:
       # ── 9. 收集所有指定产物 ───────────────────────────────────
       - name: Collect Target DEBs
         run: |
-          mkdir -p output/release-debs
+          sudo mkdir -p output/release-debs
           
           # 指定要收集的包类型关键字
           # U-Boot 通常在 output/debs/u-boot/ 中，内核相关的在 output/debs/ 中，igh 刚刚放入 output/debs/
@@ -154,7 +154,7 @@ jobs:
                [[ "$pkg" == *"linux-headers"* ]] || \
                [[ "$pkg" == *"u-boot"* ]] || \
                [[ "$pkg" == *"ethercat-igh"* ]]; then
-               cp "$pkg" output/release-debs/
+               sudo cp "$pkg" output/release-debs/
             fi
           done
           
