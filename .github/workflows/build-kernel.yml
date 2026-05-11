@@ -35,6 +35,14 @@ jobs:
         board: [robopi1, robopi2]
 
     steps:
+
+      # ── 0. 强行夺回工作区权限（给上一轮的 sudo 擦屁股） ──
+      - name: Fix Workspace Permissions
+        run: |
+          if [ -d "$GITHUB_WORKSPACE" ]; then
+            sudo chown -R $(whoami):$(whoami) "$GITHUB_WORKSPACE"
+          fi
+          
       # ── 1. 拉取代码 ──────────────────────────────────────────
       - name: Checkout repository
         uses: actions/checkout@v4
