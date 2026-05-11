@@ -38,17 +38,17 @@ jobs:
         board: [robopi1, robopi2]
 
     steps:
-      # ── 1. 释放磁盘空间（必须在 checkout 之前，否则会覆盖工作区）──
-      - name: Maximize build space
-        uses: easimon/maximize-build-space@v10
-        with:
-          root-reserve-mb: 1024
-          swap-size-mb: 1024
-          remove-dotnet: 'true'
-          remove-android: 'true'
-          remove-haskell: 'true'
-          remove-codeql: 'true'
-          remove-docker-images: 'true'
+      # # ── 1. 释放磁盘空间（必须在 checkout 之前，否则会覆盖工作区）──
+      # - name: Maximize build space
+      #   uses: easimon/maximize-build-space@v10
+      #   with:
+      #     root-reserve-mb: 1024
+      #     swap-size-mb: 1024
+      #     remove-dotnet: 'true'
+      #     remove-android: 'true'
+      #     remove-haskell: 'true'
+      #     remove-codeql: 'true'
+      #     remove-docker-images: 'true'
 
       # ── 2. 拉取代码 ──────────────────────────────────────────
       - name: Checkout repository
