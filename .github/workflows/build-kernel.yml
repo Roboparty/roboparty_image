@@ -121,6 +121,10 @@ jobs:
             
           cd igh-deb-src
           
+          # Fix missing debhelper dependency issue dynamically since ubuntu-22.04 runner lacks it for cross-compiling
+          sed -i "s/debhelper-compat (= 12)/debhelper/g" debian/control || \
+          sed -i "s/debhelper (>= 12)//g" debian/control || true
+          
           # 引入被之前 build.sh 自动下载的内核交叉编译工具链
           TOOLCHAIN_BIN="$GITHUB_WORKSPACE/toolchains/gcc-arm-11.2-2022.02-x86_64-aarch64-none-linux-gnu/bin"
           export PATH="$TOOLCHAIN_BIN:$PATH"
