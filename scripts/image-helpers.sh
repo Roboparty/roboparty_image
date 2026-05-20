@@ -191,6 +191,16 @@ PRE_CUSTOMIZE_IMAGE
 *post customize-image.sh hook*
 Run after the customize-image.sh script is run, and the overlay is unmounted.
 POST_CUSTOMIZE_IMAGE
+
+	if [[ "$BOARD" == "robopi1" || "$BOARD" == "robopi2" || "$BOARD" == "robopi3" ]]; then
+		display_alert "Configuring security limits" "for real-time priorities on $BOARD" "info"
+		cat <<EOF >> "${SDCARD}/etc/security/limits.conf"
+
+# Allow user 'orangepi' to set real-time priorities
+orangepi   -   rtprio   98
+orangepi   -   memlock  unlimited
+EOF
+	fi
 }
 
 
