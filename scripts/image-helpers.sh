@@ -268,7 +268,7 @@ dpkg_install_debs_chroot()
 	for package in "${deb_packages[@]}"; do
 		package_names+=($(dpkg-deb -f "$package" Package))
 
-		dep_str=$(dpkg-deb -I "${package}" | grep 'Depends' | sed 's/.*: //' | sed 's/ //g' | sed 's/([^)]*)//g')
+		dep_str=$(dpkg-deb -f "${package}" Depends | tr -d '\n' | sed 's/ //g' | sed 's/([^)]*)//g')
 		IFS=',' read -ra dep_array <<< "$dep_str"
 
 		if [[ ! ${#dep_array[@]} -eq 0 ]]; then
@@ -276,12 +276,10 @@ dpkg_install_debs_chroot()
 
 			for element in "${dep_array[@]}"; do
 				if [[ $element == *"|"* ]]; then
-					#dep_array=("${dep_array[@]/$element}")
-					:
-				else
-					if ! find_in_array "$element" "${package_dependencies[@]}"; then
-						package_dependencies+=("${element}")
-					fi
+					element="${element%%|*}"
+				fi
+				if ! find_in_array "$element" "${package_dependencies[@]}"; then
+					package_dependencies+=("${element}")
 				fi
 			done
 
