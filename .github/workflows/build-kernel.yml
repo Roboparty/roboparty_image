@@ -5,7 +5,7 @@ name: Build Kernel & IgH EtherCAT DEBs
 # ─────────────────────────────────────────────────────────────
 on:
   push:
-    branches: [master]
+    branches: [next]
     paths:
       - 'external/config/boards/robopi1.conf'
       - 'external/config/boards/robopi2.conf'
@@ -28,7 +28,7 @@ jobs:
   build:
     name: ${{ matrix.board }} / current (6.1.99)
     # 使用你的 EPYC 自建 Runner
-    runs-on: [self-hosted, linux, x64] 
+    runs-on: [self-hosted, a100] 
     strategy:
       fail-fast: false
       matrix:
