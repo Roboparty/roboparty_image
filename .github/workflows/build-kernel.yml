@@ -6,6 +6,7 @@ name: Build Kernel & IgH EtherCAT DEBs
 on:
   push:
     branches: [next]
+    tags: ['v*'] 
     paths:
       - 'external/config/boards/robopi1.conf'
       - 'external/config/boards/robopi2.conf'
