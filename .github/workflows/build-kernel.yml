@@ -7,22 +7,6 @@ on:
   push:
     branches: [next]
     tags: ['v*'] 
-    paths:
-      - 'external/config/boards/robopi1.conf'
-      - 'external/config/boards/robopi2.conf'
-      - 'external/config/sources/families/rockchip-rk3588.conf'
-      - 'external/config/kernel/**'
-      - 'userpatches/kernel/**'
-      - 'scripts/compilation.sh'
-      - 'scripts/configuration.sh'
-      - '.github/workflows/build-kernel.yml'
-  pull_request:
-    paths:
-      - 'external/config/boards/robopi1.conf'
-      - 'external/config/boards/robopi2.conf'
-      - 'external/config/sources/families/rockchip-rk3588.conf'
-      - 'external/config/kernel/**'
-      - 'userpatches/kernel/**'
   workflow_dispatch:
 
 jobs:
