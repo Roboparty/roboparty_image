@@ -620,10 +620,10 @@ if [[ $BUILD_OPT == rootfs || $BUILD_OPT == image ]]; then
 	        [[ "${REPOSITORY_INSTALL}" != *orangepi-zsh* ]] && compile_orangepi-zsh
 	fi
 
-	# Compile ethercat-igh if packed .deb does not exist or use the one from repository
-	if [[ -z "$(find ${DEB_STORAGE} -name "ethercat-igh_*.deb" 2>/dev/null)" ]]; then
-		[[ "${REPOSITORY_INSTALL}" != *ethercat-igh* ]] && compile_ethercat_igh
-	fi
+	# # Compile ethercat-igh if packed .deb does not exist or use the one from repository
+	# if [[ -z "$(find ${DEB_STORAGE} -name "ethercat-igh_*.deb" 2>/dev/null)" ]]; then
+	# 	[[ "${REPOSITORY_INSTALL}" != *ethercat-igh* ]] && compile_ethercat_igh
+	# fi
 
 	# # Compile f81601a if packed .deb does not exist or use the one from repository
 	# if [[ -z "$(find ${DEB_STORAGE} -name "f81601a*.deb" 2>/dev/null)" ]]; then
