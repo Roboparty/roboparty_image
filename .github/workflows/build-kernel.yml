@@ -124,34 +124,35 @@ jobs:
             tar -I 'zstd -3' -cf "$CACHE_FILE" toolchains/
           fi
 
-      # ── 6. 扩展构建：IgH EtherCAT DEB ────────────────────────
-      - name: Build IgH EtherCAT DEB
-        run: |
-          git clone --depth=1 --recurse-submodules --shallow-submodules \
-            https://github.com/wentywenty/igh-deb.git \
-            igh-deb-src
+      # # ── 6. 扩展构建：IgH EtherCAT DEB ────────────────────────
+      # - name: Build IgH EtherCAT DEB
+      #   run: |
+      #     git clone --depth=1 --recurse-submodules --shallow-submodules \
+      #       https://github.com/wentywenty/igh-deb.git \
+      #       igh-deb-src
           
-          cd igh-deb-src
+      #     cd igh-deb-src
           
-          # 修复 debhelper 兼容性
-          sed -i "s/debhelper-compat (= 12)/debhelper/g" debian/control || true
+      #     # 修复 debhelper 兼容性
+      #     sed -i "s/debhelper-compat (= 12)/debhelper/g" debian/control || true
           
-          # 指定交叉编译工具链路径
-          TOOLCHAIN_BIN="$GITHUB_WORKSPACE/toolchains/gcc-arm-11.2-2022.02-x86_64-aarch64-none-linux-gnu/bin"
-          export PATH="$TOOLCHAIN_BIN:$PATH"
-          export CROSS_COMPILE="$TOOLCHAIN_BIN/aarch64-none-linux-gnu-"
+      #     # 指定交叉编译工具链路径
+      #     TOOLCHAIN_BIN="$GITHUB_WORKSPACE/toolchains/gcc-arm-11.2-2022.02-x86_64-aarch64-none-linux-gnu/bin"
+      #     export PATH="$TOOLCHAIN_BIN:$PATH"
+      #     export CROSS_COMPILE="$TOOLCHAIN_BIN/aarch64-none-linux-gnu-"
           
-          # 指定刚才编译出的内核源码路径 (不缓存，现场引用)
-          export KERNEL_SRC="$GITHUB_WORKSPACE/kernel/orange-pi-6.1-rk35xx"
-          export ARCH="arm64"
+      #     # 指定刚才编译出的内核源码路径 (不缓存，现场引用)
+      #     export KERNEL_SRC="$GITHUB_WORKSPACE/kernel/orange-pi-6.1-rk35xx"
+      #     export ARCH="arm64"
           
-          # 执行 ARM64 交叉打包
-          dpkg-buildpackage -d -us -uc -a arm64 -b
+      #     # 执行 ARM64 交叉打包
+      #     dpkg-buildpackage -d -us -uc -a arm64 -b
           
-          sudo cp ../ethercat-igh_*.deb "$GITHUB_WORKSPACE/output/debs/"
+      #     sudo cp ../ethercat-igh_*.deb "$GITHUB_WORKSPACE/output/debs/"
 
       # ── 7. 收集并上传产物 ────────────────────────────────────
-      - name: Collect U-Boot & EtherCAT DEBs
+      # - name: Collect U-Boot & EtherCAT DEBs
+      - name: Collect U-Boot DEBs
         run: |
           sudo mkdir -p output/release-debs
           find output/debs -type f -name "*.deb" | while read -r pkg; do
