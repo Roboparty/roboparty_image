@@ -74,10 +74,16 @@ prepare_board() {
 	find /etc/logrotate.d/. -type f | xargs grep -H -c 'compress' | grep 0$ | cut -d':' -f1 | xargs -r -L1 sed -i '/{/ a compress'
 	sed -i "s/#compress/compress/" /etc/logrotate.conf
 
+	# apply governor from cpufrequtils config
+	source /etc/default/cpufrequtils 2>/dev/null
+	if [ -n "$GOVERNOR" ]; then
+		for cpu in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do
+			[ -f "$cpu" ] && echo "$GOVERNOR" > "$cpu"
+		done
+	fi
+
 	# tweak ondemand cpufreq governor settings to increase cpufreq with IO load
-	grep -q ondemand /etc/default/cpufrequtils
-	if [ $? -eq 0 ]; then
-		echo ondemand >/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+	if [ "$GOVERNOR" = "ondemand" ]; then
 		cd /sys/devices/system/cpu
 		for i in cpufreq/ondemand cpu0/cpufreq/ondemand cpu4/cpufreq/ondemand ; do
 			if [ -d $i ]; then

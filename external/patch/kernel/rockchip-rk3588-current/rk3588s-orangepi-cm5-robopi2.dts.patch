@@ -1,6 +1,6 @@
 --- /dev/null
 +++ b/arch/arm64/boot/dts/rockchip/rk3588s-orangepi-cm5-robopi2.dts
-@@ -0,0 +1,1049 @@
+@@ -0,0 +1,1043 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2021 Rockchip Electronics Co., Ltd.
@@ -240,45 +240,37 @@
 +		#clock-cells = <0>;
 +	};
 +
-+	fan0: gpio-fan-0 {
-+        compatible = "gpio-fan";
-+        gpios = <&gpio1 RK_PB7 GPIO_ACTIVE_HIGH>;
-+        gpio-fan,speed-map = <0 0 5000 1>; /* 0: 关闭, 5000: 开启 */
-+        #cooling-cells = <2>;
-+        pinctrl-names = "default";
-+        pinctrl-0 = <&fan0_en>;
-+        status = "okay";
-+    };
++	gpio_keys: gpio-keys {
++		compatible = "gpio-keys";
++		autorepeat;
++		pinctrl-names = "default";
++		pinctrl-0 = <&key1_pin &key2_pin &key3_pin &key4_pin>;
 +
-+    fan1: gpio-fan-1 {
-+        compatible = "gpio-fan";
-+        gpios = <&gpio1 RK_PB6 GPIO_ACTIVE_HIGH>;
-+        gpio-fan,speed-map = <0 0 5000 1>;
-+        #cooling-cells = <2>;
-+        pinctrl-names = "default";
-+        pinctrl-0 = <&fan1_en>;
-+        status = "okay";
-+    };
-+
-+    fan2: gpio-fan-2 {
-+        compatible = "gpio-fan";
-+        gpios = <&gpio1 RK_PA3 GPIO_ACTIVE_HIGH>;
-+        gpio-fan,speed-map = <0 0 5000 1>;
-+        #cooling-cells = <2>;
-+        pinctrl-names = "default";
-+        pinctrl-0 = <&fan2_en>;
-+        status = "okay";
-+    };
-+
-+    fan3: gpio-fan-3 {
-+        compatible = "gpio-fan";
-+        gpios = <&gpio1 RK_PD2 GPIO_ACTIVE_HIGH>;
-+        gpio-fan,speed-map = <0 0 5000 1>;
-+        #cooling-cells = <2>;
-+        pinctrl-names = "default";
-+        pinctrl-0 = <&fan3_en>;
-+        status = "okay";
-+    };
++		key1 {
++			label = "Key 1";
++			linux,code = <KEY_PROG1>;
++			gpios = <&gpio3 RK_PB1 GPIO_ACTIVE_LOW>;
++			debounce-interval = <20>;
++		};
++		key2 {
++			label = "Key 2";
++			linux,code = <KEY_PROG2>;
++			gpios = <&gpio3 RK_PB4 GPIO_ACTIVE_LOW>;
++			debounce-interval = <20>;
++		};
++		key3 {
++			label = "Key 3";
++			linux,code = <KEY_PROG3>;
++			gpios = <&gpio3 RK_PB5 GPIO_ACTIVE_LOW>;
++			debounce-interval = <20>;
++		};
++		key4 {
++			label = "Key 4";
++			linux,code = <KEY_PROG4>;
++			gpios = <&gpio3 RK_PB6 GPIO_ACTIVE_LOW>;
++			debounce-interval = <20>;
++		};
++	};
 +};
 +
 +&av1d {
@@ -835,11 +827,7 @@
 +};
 +
 +&i2s2_2ch {
-+	status = "okay";
-+	pinctrl-0 = <&i2s2m1_lrck
-+	             &i2s2m1_sclk
-+	             &i2s2m1_sdi
-+	             &i2s2m1_sdo>;
++	status = "disabled";
 +};
 +
 +&i2s5_8ch {
@@ -877,6 +865,12 @@
 +&pwm3 {
 +	pinctrl-names = "active";
 +	pinctrl-0 = <&pwm3m3_pins>;
++	status = "okay";
++};
++
++&pwm10 {
++	pinctrl-names = "active";
++	pinctrl-0 = <&pwm10m1_pins>;
 +	status = "okay";
 +};
 +
@@ -1035,18 +1029,18 @@
 +		};
 +	};
 +
-+	gpio-fan {
-+        fan0_en: fan0-en {
-+            rockchip,pins = <1 RK_PB7 RK_FUNC_GPIO &pcfg_pull_none>;
-+        };
-+        fan1_en: fan1-en {
-+            rockchip,pins = <1 RK_PB6 RK_FUNC_GPIO &pcfg_pull_none>;
-+        };
-+        fan2_en: fan2-en {
-+            rockchip,pins = <1 RK_PA3 RK_FUNC_GPIO &pcfg_pull_none>;
-+        };
-+        fan3_en: fan3-en {
-+            rockchip,pins = <1 RK_PD2 RK_FUNC_GPIO &pcfg_pull_none>;
-+        };
-+    };
++	gpio-keys {
++		key1_pin: key1-pin {
++			rockchip,pins = <3 RK_PB1 RK_FUNC_GPIO &pcfg_pull_up>;
++		};
++		key2_pin: key2-pin {
++			rockchip,pins = <3 RK_PB4 RK_FUNC_GPIO &pcfg_pull_up>;
++		};
++		key3_pin: key3-pin {
++			rockchip,pins = <3 RK_PB5 RK_FUNC_GPIO &pcfg_pull_up>;
++		};
++		key4_pin: key4-pin {
++			rockchip,pins = <3 RK_PB6 RK_FUNC_GPIO &pcfg_pull_up>;
++		};
++	};
 +};

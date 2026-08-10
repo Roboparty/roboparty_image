@@ -2114,7 +2114,7 @@ install_roboparty() {
             robopi1|robopi2|robopi3)
                 # 利用正则或者变量特性，直接截取板卡名作为源名称，代码更简洁
                 roboparty_dist="${BOARD}"
-                roboparty_pkgs="roboparty-all"
+                roboparty_pkgs="roboparty-all robopi-config"
                 ;;
             *)
                 display_alert "BUILD_ROBOPARTY_PACKAGES=yes but board '${BOARD}' has no RoboParty source defined, skipping" "" "wrn"
