@@ -1,6 +1,6 @@
 --- /dev/null
 +++ b/arch/arm64/boot/dts/rockchip/rk3588s-orangepi-cm5-robopi2.dts
-@@ -0,0 +1,1049 @@
+@@ -0,0 +1,1067 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2021 Rockchip Electronics Co., Ltd.
@@ -269,6 +269,19 @@
 +			linux,code = <KEY_PROG4>;
 +			gpios = <&gpio3 RK_PB6 GPIO_ACTIVE_LOW>;
 +			debounce-interval = <20>;
++		};
++	};
++
++	usb_hub_rst: usb-hub-rst {
++		compatible = "gpio-leds";
++		pinctrl-names = "default";
++		pinctrl-0 = <&usb_hub_rst_gpio>;
++		status = "okay";
++
++		hub@1 {
++			gpios = <&gpio4 RK_PB5 GPIO_ACTIVE_HIGH>;
++			label = "usb_hub_reset";
++			linux,default-trigger = "none";
 +		};
 +	};
 +};
@@ -657,7 +670,6 @@
 +
 +&hdmi0 {
 +	status = "disabled";
-+	enable-gpios = <&gpio4 RK_PB5 GPIO_ACTIVE_HIGH>;
 +	cec-enable = "true";
 +};
 +
@@ -1032,6 +1044,12 @@
 +	sata {
 +		sata_reset:sata-reset{
 +			rockchip,pins = <3 RK_PD1 RK_FUNC_GPIO &pcfg_pull_up>;
++		};
++	};
++
++	usb-hub {
++		usb_hub_rst_gpio: usb-hub-rst-gpio {
++			rockchip,pins = <4 RK_PB5 RK_FUNC_GPIO &pcfg_pull_none>;
 +		};
 +	};
 +
