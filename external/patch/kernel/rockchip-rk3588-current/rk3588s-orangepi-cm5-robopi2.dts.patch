@@ -578,7 +578,7 @@
 +//phy2
 +&pcie2x1l1 {
 +	reset-gpios = <&gpio4 RK_PA2 GPIO_ACTIVE_HIGH>;
-+	status = "okay";
++	status = "disabled";
 +};
 +
 +//phy0
@@ -635,8 +635,8 @@
 +
 +&usbdrd_dwc3_0 {
 +	status = "okay";
-+	dr_mode = "peripheral";
-+	maximum-speed = "high-speed";
++	dr_mode = "host";
++	maximum-speed = "super-speed";
 +	extcon = <&u2phy0>;
 +};
 +
