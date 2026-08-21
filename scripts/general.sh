@@ -2138,10 +2138,13 @@ install_roboparty() {
         echo "deb [arch=arm64 signed-by=/usr/share/keyrings/roboparty-archive-keyring.gpg] http://apt.roboparty.com ${roboparty_dist} main" \
             >> "${SDCARD}/etc/apt/sources.list.d/roboparty.list"
 
-        # 4. 在 Chroot 环境中执行更新和安装
+        # 4. 在 Chroot 环境中执行更新、升级和安装
         # 🚨 极其关键：加上 DEBIAN_FRONTEND=noninteractive 防止任何交互式弹窗卡死构建进程
-        display_alert "Installing" "Packages via APT in chroot" "info"
+        display_alert "Updating" "System packages in chroot" "info"
         chroot "${SDCARD}" /bin/bash -c "DEBIAN_FRONTEND=noninteractive apt-get update"
+        chroot "${SDCARD}" /bin/bash -c "DEBIAN_FRONTEND=noninteractive apt-get upgrade -y"
+
+        display_alert "Installing" "RoboParty packages in chroot" "info"
         chroot "${SDCARD}" /bin/bash -c "DEBIAN_FRONTEND=noninteractive apt-get install -y ${roboparty_pkgs}"
 
     fi

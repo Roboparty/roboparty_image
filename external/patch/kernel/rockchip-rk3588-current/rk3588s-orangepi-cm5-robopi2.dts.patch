@@ -1,6 +1,6 @@
 --- /dev/null
 +++ b/arch/arm64/boot/dts/rockchip/rk3588s-orangepi-cm5-robopi2.dts
-@@ -0,0 +1,1067 @@
+@@ -0,0 +1,1120 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2021 Rockchip Electronics Co., Ltd.
@@ -244,7 +244,7 @@
 +		compatible = "gpio-keys";
 +		autorepeat;
 +		pinctrl-names = "default";
-+		pinctrl-0 = <&key1_pin &key2_pin &key3_pin &key4_pin>;
++		pinctrl-0 = <&key1_pin &key2_pin &key3_pin &key4_pin &key5_pin>;
 +
 +		key1 {
 +			label = "Key 1";
@@ -269,6 +269,41 @@
 +			linux,code = <KEY_PROG4>;
 +			gpios = <&gpio3 RK_PB6 GPIO_ACTIVE_LOW>;
 +			debounce-interval = <20>;
++		};
++		key5 {
++			label = "Key 5";
++			linux,code = <BTN_5>;
++			gpios = <&gpio1 RK_PD5 GPIO_ACTIVE_HIGH>;
++			debounce-interval = <20>;
++		};
++	};
++
++	dual-battery-control {
++		compatible = "gpio-leds";
++		pinctrl-names = "default";
++		pinctrl-0 = <&dual_battery_b0_pin
++			     &dual_battery_b7_pin
++			     &dual_battery_c2_pin>;
++
++		dual-battery-b0 {
++			label = "dual_battery_b0";
++			gpios = <&gpio1 RK_PB0 GPIO_ACTIVE_HIGH>;
++			linux,default-trigger = "none";
++			default-state = "off";
++		};
++
++		dual-battery-b7 {
++			label = "dual_battery_b7";
++			gpios = <&gpio1 RK_PB7 GPIO_ACTIVE_HIGH>;
++			linux,default-trigger = "none";
++			default-state = "off";
++		};
++
++		dual-battery-c2 {
++			label = "dual_battery_c2";
++			gpios = <&gpio0 RK_PC2 GPIO_ACTIVE_HIGH>;
++			linux,default-trigger = "none";
++			default-state = "off";
 +		};
 +	};
 +
@@ -649,6 +684,7 @@
 +};
 +
 +&usbdp_phy0 {
++	rockchip,dp-lane-mux = <2 3>;
 +	status = "okay";
 +};
 +
@@ -1065,6 +1101,23 @@
 +		};
 +		key4_pin: key4-pin {
 +			rockchip,pins = <3 RK_PB6 RK_FUNC_GPIO &pcfg_pull_up>;
++		};
++		key5_pin: key5-pin {
++			rockchip,pins = <1 RK_PD5 RK_FUNC_GPIO &pcfg_pull_down>;
++		};
++	};
++
++	dual-battery-control {
++		dual_battery_b0_pin: dual-battery-b0-pin {
++			rockchip,pins = <1 RK_PB0 RK_FUNC_GPIO &pcfg_pull_down>;
++		};
++
++		dual_battery_b7_pin: dual-battery-b7-pin {
++			rockchip,pins = <1 RK_PB7 RK_FUNC_GPIO &pcfg_pull_down>;
++		};
++
++		dual_battery_c2_pin: dual-battery-c2-pin {
++			rockchip,pins = <0 RK_PC2 RK_FUNC_GPIO &pcfg_pull_down>;
 +		};
 +	};
 +};

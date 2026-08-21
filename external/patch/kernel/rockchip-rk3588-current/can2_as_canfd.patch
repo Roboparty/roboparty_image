@@ -2,6 +2,15 @@ diff --git a/arch/arm64/boot/dts/rockchip/rk3588s.dtsi b/arch/arm64/boot/dts/roc
 index da52879906c0..186902bd0d72 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3588s.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3588s.dtsi
+@@ -6004,7 +6004,7 @@
+ 	};
+ 
+ 	can0: can@fea50000 {
+-		compatible = "rockchip,can-2.0";
++		compatible = "rockchip,canfd-1.0";
+ 		reg = <0x0 0xfea50000 0x0 0x1000>;
+ 		interrupts = <GIC_SPI 341 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&cru CLK_CAN0>, <&cru PCLK_CAN0>;
 @@ -6032,7 +6032,7 @@
  	};
  
