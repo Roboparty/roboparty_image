@@ -23,8 +23,8 @@
 +#include "rk3588-linux.dtsi"
 +
 +/ {
-+	model = "RK3588S Orange Pi CM5 Tablet";
-+	compatible = "rockchip,rk3588s-orangepi-cm5-tablet", "rockchip,rk3588";
++	model = "RK3588S Orange Pi CM5 ROBOPI2";
++	compatible = "roboparty,robopi2", "rockchip,rk3588s-orangepi-cm5-tablet", "rockchip,rk3588";
 +
 +	backlight: backlight {
 +		compatible = "pwm-backlight";
