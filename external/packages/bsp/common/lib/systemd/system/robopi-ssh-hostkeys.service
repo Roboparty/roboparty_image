@@ -1,0 +1,10 @@
+[Unit]
+Description=Prepare unique SSH host keys for RoboPi
+After=local-fs.target
+Before=ssh.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/ssh-keygen -A
+RemainAfterExit=yes
+TimeoutStartSec=120

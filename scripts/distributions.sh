@@ -500,6 +500,16 @@ It allows implementors access to the rootfs (`${SDCARD}`) in its pristine state 
 FAMILY_TWEAKS
 
 	# enable additional services
+	# Copy explicitly as well as through the BSP: a cached/older BSP package must
+	# not leave SSH without the key-generation dependency on a freshly built image.
+	install -D -m 0644 "${EXTER}/packages/bsp/common/lib/systemd/system/robopi-ssh-hostkeys.service" \
+		"${SDCARD}/lib/systemd/system/robopi-ssh-hostkeys.service"
+	install -D -m 0644 "${EXTER}/packages/bsp/common/etc/systemd/system/ssh.service.d/10-robopi-hostkeys.conf" \
+		"${SDCARD}/etc/systemd/system/ssh.service.d/10-robopi-hostkeys.conf"
+	install -m 0755 "${EXTER}/packages/bsp/common/usr/lib/orangepi/orangepi-firstrun" \
+		"${SDCARD}/usr/lib/orangepi/orangepi-firstrun"
+	chroot "${SDCARD}" /bin/bash -ec 'test -x /usr/sbin/sshd; test -x /usr/bin/ssh-keygen; systemctl --no-reload unmask ssh.service; systemctl --no-reload enable ssh.service; systemctl is-enabled --quiet ssh.service' || \
+		exit_with_error "Failed to enable SSH in the image" "ssh.service"
 	chroot "${SDCARD}" /bin/bash -c "systemctl --no-reload enable orangepi-firstrun.service >/dev/null 2>&1"
 	chroot "${SDCARD}" /bin/bash -c "systemctl --no-reload enable orangepi-firstrun-config.service >/dev/null 2>&1"
 	chroot "${SDCARD}" /bin/bash -c "systemctl --no-reload enable orangepi-zram-config.service >/dev/null 2>&1"
@@ -852,6 +862,13 @@ post_debootstrap_tweaks()
 Last chance to touch the `${SDCARD}` filesystem before it is copied to the final media.
 It is too late to run any chrooted commands, since the supporting filesystems are already unmounted.
 POST_POST_DEBOOTSTRAP_TWEAKS
+
+	# Never distribute build-host/cached SSH host identities. This runs only
+	# during image finalization; boot-time ssh-keygen -A preserves existing keys.
+	[[ -n "${SDCARD}" && "${SDCARD}" != / && -d "${SDCARD}/etc/ssh" ]] || \
+		exit_with_error "Invalid rootfs for SSH host-key cleanup" "${SDCARD}"
+	find "${SDCARD}/etc/ssh" -maxdepth 1 -type f \
+		\( -name 'ssh_host_*_key' -o -name 'ssh_host_*_key.pub' \) -delete
 
 }
 
